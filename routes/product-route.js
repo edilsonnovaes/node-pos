@@ -79,4 +79,18 @@ router.put('/:productId', function (req, res) {
   });
 });
 
+//DELETE=> localhost:3000/api/produtos/ID
+router.delete('/:productId', function(req, res){
+  Produto.findByIdAndRemove(req.params.productId, (err, produto) => {
+      if(err) 
+          res.status(500).send("Erro ao deletar ", err)
+
+      const response ={
+          message: "Produto removido com sucesso",
+          id: produto.id
+      };
+      return res.status(200).send(response);
+  });
+});
+
 module.exports = router;
