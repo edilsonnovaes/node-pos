@@ -31,4 +31,25 @@ router.get('/', function(req, res){
   });
 });
 
+//GetbyId=> localhost:3000/api/produtos
+router.get('/:productId', function (req, res) {
+  const id = req.params.productId;
+  Produto.findById(id, function (err, produto) {
+    if (err) {
+      res.status(500).json({
+        message: "Erro ao tentar encontrar produto; ID mal formado"
+      });
+    } else if (produto == null) {
+      res.status(400).json({
+        message: "produto não encontrado para o id passado"
+      });
+    } else {
+      res.status(200).json({
+        message: "produto encontrado",
+        produto: produto
+      });
+    }
+  });
+});
+
 module.exports = router;
