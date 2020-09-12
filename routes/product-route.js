@@ -52,4 +52,31 @@ router.get('/:productId', function (req, res) {
   });
 });
 
+//PUT=> localhost:3000/api/produtos
+router.put('/:productId', function (req, res) {
+  const id = req.params.productId;
+  Produto.findById(id, function (err, produto) {
+    if (err) {
+      res.status(500).json({
+        message: "Erro ao tentar encontrar produto; ID mal formado"
+      });
+    } else if (produto == null) {
+      res.status(400).json({
+        message: "produto não encontrado para o id passado"
+      });
+    } else {
+      produto.nome = req.body.nome;
+      produto.preco = req.body.preco;
+      produto.descricao = req.body.descricao;
+
+      produto.save(function(error){
+          if(error)
+              res.send("Erro ao tentar salvar um novo produto ", error);
+          
+          res.status(200).json({message: 'produto atualizado com sucesso'});
+      });
+    }
+  });
+});
+
 module.exports = router;

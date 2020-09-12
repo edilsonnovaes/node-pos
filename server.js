@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3000;
 
 //Persistência
-const connectionString = "mongodb+srv://<usuario>:<senha>@cluster0-nffnp.mongodb.net/dbpos?retryWrites=true&w=majority";
+const connectionString = "mongodb+srv://edilson:edilson@cluster0-nffnp.mongodb.net/dbpos?retryWrites=true&w=majority";
 mongoose.connect(connectionString, {
                                       useNewUrlParser:true, 
                                       useUnifiedTopology: true, 
