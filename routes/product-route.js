@@ -9,10 +9,13 @@ router.post('/', function (req, res){
     produto.nome = req.body.nome;
     produto.preco = req.body.preco;
     produto.descricao = req.body.descricao;
+    produto.categoria = req.body.categoria;
 
     produto.save(function(error){
         if(error)
-            res.send("Erro ao tentar salvar um novo produto ", error);
+            res.status(500).send({
+              message: "Error ao tentar salvar um novo produto " + error
+          });
         
         res.status(201).json({message: 'produto inserido com sucesso'});
     });
@@ -28,7 +31,7 @@ router.get('/', function(req, res){
           message: "retorno ok de todos os produtos",
           allProducts: prods
       });
-  });
+  }).populate('categoria');
 });
 
 //GetbyId=> localhost:3000/api/produtos
@@ -46,10 +49,10 @@ router.get('/:productId', function (req, res) {
     } else {
       res.status(200).json({
         message: "produto encontrado",
-        produto: produto
+        produto: produto.populate('categoria')
       });
     }
-  });
+  }).populate('categoria');
 });
 
 //PUT=> localhost:3000/api/produtos

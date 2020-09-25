@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const port = process.env.PORT || 3000;
 
 //Persistência
-const connectionString = "mongodb+srv://<usuario>:<senha>@cluster0-nffnp.mongodb.net/dbpos?retryWrites=true&w=majority";
+const connectionString = "mongodb+srv://edilson:edilson@cluster0-nffnp.mongodb.net/dbpos?retryWrites=true&w=majority";
 mongoose.connect(connectionString, {
                                       useNewUrlParser:true, 
                                       useUnifiedTopology: true, 
@@ -21,6 +21,7 @@ mongoose.connect(connectionString, {
 //Definindo as rotas
 const router = express.Router(); // Interceptar todas as rotas
 const productRoute = require('./routes/product-route');
+const categoryRoute = require('./routes/category-route');
 const indexRoute = require('./routes/index-route');
 
 // '/api' é o caminho padrão para as APIs REST
@@ -28,6 +29,9 @@ app.use('/api', indexRoute);
 
 // Rota para produto
 app.use('/api/produtos/', productRoute);
+
+// Rota para categoria
+app.use('/api/categorias/', categoryRoute);
 
 app.listen(port, () => {
   console.log('server is up and running ... ');
